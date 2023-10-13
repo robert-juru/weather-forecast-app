@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="../src/style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap");
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="left-section">
+        <header class="app-header">
+          <div class="weather-logo header-container">
+            <img
+              src="/src/images/weather-icons/weather-logo.png"
+              class="weather-logo"
+              alt="weather-logo"
+            />
+          </div>
+          <input
+            class="header-container"
+            type="search"
+            name="search"
+            id="search"
+            placeholder="Search location"
+          />
+        </header>
+        <main class="today-weather">
+          <div class="today-weather-header">
+            <div class="location-info">
+              <h1 class="location">Galati, Romania</h1>
+              <p class="date">Thursday, October 12 2023</p>
+            </div>
+            <div class="temperature-info">
+              <p>3:41:36 PM</p>
+              <p>7°C / 23°C</p>
+              <p>Sunny</p>
+            </div>
+          </div>
+          <div class="today-temperature">
+            <h1 class="today-degrees">23<sup>°C</sup></h1>
+            <img
+              class="weather-icon"
+              id="sunny"
+              src="/src/images/weather-icons/sunny.svg"
+              alt="sunny-weather"
+            />
+          </div>
+          <section class="weather-hours">
+            <article>
+              <p>13:00</p>
+              <p>
+                <img
+                  class="weather-hours-icon"
+                  id="sunny"
+                  src="/src/images/weather-icons/sunny.svg"
+                  alt="sunny-weather"
+                />
+              </p>
+              <p class="weather-hours-temperature">23°C</p>
+              <div class="rain-chances-hours">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain probability"
+                />
+                <span>15%</span>
+              </div>
+            </article>
+            <article>
+              <p>14:00</p>
+              <p>
+                <img
+                  class="weather-hours-icon"
+                  id="sunny"
+                  src="/src/images/weather-icons/sunny.svg"
+                  alt="sunny-weather"
+                />
+              </p>
+              <p class="weather-hours-temperature">23°C</p>
+              <div class="rain-chances-hours">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain probability"
+                />
+                <span>12%</span>
+              </div>
+            </article>
+            <article>
+              <p>15:00</p>
+              <p>
+                <img
+                  class="weather-hours-icon"
+                  id="sunny"
+                  src="/src/images/weather-icons/sunny.svg"
+                  alt="sunny-weather"
+                />
+              </p>
+              <p class="weather-hours-temperature">23°C</p>
+              <div class="rain-chances-hours">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain probability"
+                />
+                <span>21%</span>
+              </div>
+            </article>
+            <article>
+              <p>16:00</p>
+              <p>
+                <img
+                  class="weather-hours-icon"
+                  id="sunny"
+                  src="/src/images/weather-icons/sunny.svg"
+                  alt="sunny-weather"
+                />
+              </p>
+              <p class="weather-hours-temperature">23°C</p>
+              <div class="rain-chances-hours">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain probability"
+                />
+                <span>8%</span>
+              </div>
+            </article>
+          </section>
+          <section class="sun-phase">
+            <article id="sunrise">
+              <img
+                src="/src/images/weather-details/sunrise.svg"
+                class="sun-phase-icon"
+                alt="sunrise icon"
+              />
+              <div class="sunrise-hour-container">
+                <p class="sunrise-title">Sunrise</p>
+                <p class="sunrise-hour">07:21</p>
+              </div>
+            </article>
+            <article id="sunset">
+              <img
+                src="/src/images/weather-details/sunset.svg"
+                class="sun-phase-icon"
+                alt="sunset icon"
+              />
+              <div class="sunset-hour-container">
+                <p class="sunset-title">Sunset</p>
+                <p class="sunset-hour">18:07</p>
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
+      <div class="right-section">
+        <section class="weather-details">
+          <ul>
+            <h3>Today's weather details</h3>
+            <li class="weather-detail-list-elem">
+              <div class="weather-detail">
+                <img
+                  src="/src/images/weather-details/perceived_temperature.svg"
+                  alt="thermometer icon"
+                />
+                <p>Perceived Temperature</p>
+              </div>
+              <p class="weather-detail-value">24°C</p>
+            </li>
+            <hr />
+            <li class="weather-detail-list-elem">
+              <div class="weather-detail">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain icon"
+                />
+                <p>Rain Probability</p>
+              </div>
+              <p class="weather-detail-value">53%</p>
+            </li>
+            <hr />
+            <li class="weather-detail-list-elem">
+              <div class="weather-detail">
+                <img
+                  src="/src/images/weather-details/wind_speed.svg"
+                  alt="wind icon"
+                />
+                <p>Wind Speed</p>
+              </div>
+              <p class="weather-detail-value">23 Km/h</p>
+            </li>
+            <hr />
+            <li class="weather-detail-list-elem">
+              <div class="weather-detail">
+                <img
+                  src="/src/images/weather-details/humidity.svg"
+                  alt="humidity raindrop icon"
+                />
+                <p>Air Humidity</p>
+              </div>
+              <p class="weather-detail-value">17%</p>
+            </li>
+            <hr />
+            <li class="weather-detail-list-elem">
+              <div class="weather-detail">
+                <img
+                  src="/src/images/weather-details/uv_index.svg"
+                  alt="uv index sunny icon"
+                />
+                <p>UV Index</p>
+              </div>
+              <p class="weather-detail-value">3</p>
+            </li>
+          </ul>
+        </section>
+        <section class="weather-forecast-section">
+        <h3>Forecast for 3 days</h3>
+        <div class="weather-forecast-container">
+          <article class="weather-forecast-day">
+            <p>Thursday</p>
+            <p>
+              <img
+                class="weather-days-icon"
+                id="sunny"
+                src="/src/images/weather-icons/sunny.svg"
+                alt="sunny-weather"
+              />
+            </p>
+            <p class="weather-hours-temperature">14°C / 25°C</p>
+            <div class="rain-chances-hours">
+              <img
+                src="/src/images/weather-details/rain_probability.svg"
+                alt="rain probability"
+              />
+              <span>11%</span>
+            </div>
+          </article>
+          <article class="weather-forecast-day">
+            <p>Friday</p>
+            <p>
+              <img
+                class="weather-days-icon"
+                id="sunny"
+                src="/src/images/weather-icons/sunny.svg"
+                alt="sunny-weather"
+              />
+            </p>
+            <p class="weather-hours-temperature">11°C / 23°C</p>
+            <div class="rain-chances-hours">
+              <img
+                src="/src/images/weather-details/rain_probability.svg"
+                alt="rain probability"
+              />
+              <span>7%</span>
+            </div>
+          </article>
+          <article class="weather-forecast-day">
+            <p>Saturday</p>
+            <p>
+              <img
+                class="weather-days-icon"
+                id="sunny"
+                src="/src/images/weather-icons/sunny.svg"
+                alt="sunny-weather"
+              />
+            </p>
+            <p class="weather-hours-temperature">10°C / 21°C</p>
+            <div class="rain-chances-hours">
+              <img
+                src="/src/images/weather-details/rain_probability.svg"
+                alt="rain probability"
+              />
+              <span>15%</span>
+            </div>
+          </article>
+        </div>
+        </section>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="main.js"></script>
+  </body>
+</html>

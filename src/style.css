@@ -1,0 +1,209 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+body,
+html {
+  background: rgb(19, 19, 25);
+  /* height: 100%; */
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style-type: none;
+  color: #bfbfd4;
+}
+
+.location-info,
+.temperature-info,
+.weather-detail-value {
+  color: #fafafa;
+}
+
+h3 {
+  color: #7f7f98;
+}
+
+input[type="search"] {
+  color: white;
+  padding: 16px;
+  width: 100%;
+  border: none;
+}
+
+input[type="search"]:focus {
+  outline: none;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 24px 96px 24px 96px;
+  /* height: 100%; */
+}
+
+.left-section {
+  color: white;
+  padding: 12px 24px;
+  background-color: #16161f;
+  border-radius: 8px;
+}
+
+.app-header {
+  display: flex;
+  gap: 12px;
+}
+
+.header-container {
+  background-color: #1e1e29;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.weather-logo {
+  height: 40px;
+}
+
+.weather-hours {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 24px;
+}
+
+.weather-hours > article,
+.sun-phase > article,
+.weather-forecast-container > article {
+  background-color: #1e1e29;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.today-weather-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.today-temperature {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+}
+
+.today-degrees {
+  color: white;
+  font-size: 108px;
+}
+
+sup {
+  font-size: 54px;
+}
+
+.weather-icon {
+  height: 108px;
+}
+
+.weather-hours-icon, 
+.weather-days-icon {
+  height: 40px;
+  padding-top:4px;
+}
+
+.rain-chances-hours {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.weather-hours-temperature {
+  font-size: 20px;
+  padding: 6px;
+}
+
+.sun-phase-icon {
+  height: 48px;
+}
+
+.sun-phase {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 0px 24px;
+}
+
+#sunrise,
+#sunset {
+  flex-direction: row;
+  gap: 32px;
+  padding: 24px;
+}
+
+.sunrise-title,
+.sunset-title {
+  font-size: 20px;
+}
+
+/* Right Section */
+
+.right-section {
+  display:grid;
+  grid-template-rows:1.4fr 1fr;
+  gap: 16px;
+}
+
+.weather-details,
+.weather-forecast-section {
+  background-color:#16161f;
+  padding: 24px 24px 12px 24px;
+  border-radius: 8px;
+}
+
+ul > h3,
+.weather-forecast-section > h3 {
+  padding-bottom: 32px;
+}
+
+.weather-detail-list-elem {
+  display:flex;
+  justify-content: space-between;
+  padding:16px;
+}
+
+.weather-detail {
+  display:flex;
+  justify-content: center;
+  gap:16px;
+}
+
+hr {
+  color:#1E1E29;
+}
+
+.weather-forecast-day {
+  gap:6px;
+}
+
+.weather-forecast-container {
+  display:grid;
+  grid-template-rows:1fr;
+  grid-template-columns: repeat(3,1fr);
+  gap:16px;
+  color:white;
+}
