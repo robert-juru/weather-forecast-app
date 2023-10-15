@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, parse } from 'date-fns';
 
 const apiKey = 'cd21f6b65bf347d6a4e142840231310';
 let location = document.querySelector('.location').textContent;
@@ -18,7 +18,7 @@ async function searchLocation(event) {
             document.querySelector('.location').textContent = weatherData.location;
             document.querySelector('.date').textContent = weatherData.formattedLocalTime;
             document.querySelector('.today-degrees').innerHTML = weatherData.temperatureCelsius + tempUnitSup;
-            document.querySelector('.current-hour').textContent = weatherData.localHour;
+            document.querySelector('.current-hour').textContent = weatherData.formattedlocalHour;
             document.querySelector('.current-temp-interval').innerHTML = tempIntervals[0];
             document.querySelector('.current-weather-condition').textContent = weatherData.weatherCondition;
             document.querySelector('.sunrise-hour').textContent = weatherData.sunrise;
@@ -50,7 +50,7 @@ async function searchInitialLocation() {
         document.querySelector('.location').textContent = weatherData.location;
         document.querySelector('.date').textContent = weatherData.formattedLocalTime;
         document.querySelector('.today-degrees').innerHTML = weatherData.temperatureCelsius + tempUnitSup;
-        document.querySelector('.current-hour').textContent = weatherData.localHour;
+        document.querySelector('.current-hour').textContent = weatherData.formattedlocalHour;
         document.querySelector('.current-temp-interval').innerHTML = tempIntervals[0];
         document.querySelector('.current-weather-condition').textContent = weatherData.weatherCondition;
         document.querySelector('.sunrise-hour').textContent = weatherData.sunrise;
@@ -94,7 +94,9 @@ async function fetchWeatherData() {
         const weatherCondition = data.current.condition.text;
         const temperatureCelsius = Math.round(data.current.temp_c);
         const localHour = localTime.split(' ')[1];
-        const formattedLocalTime = format(parseISO(localTime), 'EEEE, MMMM dd yyyy')
+        const parsedLocalHour = parse(localHour, 'H:mm', new Date());
+        const formattedlocalHour = format(parsedLocalHour, 'HH:mm');
+        const formattedLocalTime = format(parseISO(localTime.split(' ')[0]), 'EEEE, MMMM dd yyyy')
         const sunrise = data.forecast.forecastday[0].astro.sunrise;
         const sunset = data.forecast.forecastday[0].astro.sunset;
 
@@ -104,7 +106,7 @@ async function fetchWeatherData() {
         const hourlyForecasts = data.forecast.forecastday[0].hour;
         for (let i = 0; i < hourlyForecasts.length; i++) {
             let hourForecast = hourlyForecasts[i].time.split(' ')[1];
-            if (localHour.substring(0, 2) === hourForecast.substring(0, 2)) {
+            if (formattedlocalHour.substring(0, 2) === hourForecast.substring(0, 2)) {
                 currentRainProbability = hourlyForecasts[i].chance_of_rain;
             }
         }
@@ -128,7 +130,7 @@ async function fetchWeatherData() {
         const day2ChanceOfRain = data.forecast.forecastday[1].day.daily_chance_of_rain + probabilityUnit;
         const day3ChanceOfRain = data.forecast.forecastday[2].day.daily_chance_of_rain + probabilityUnit;
 
-        let weatherData = { location, formattedLocalTime, localHour, weatherCondition, temperatureCelsius, sunrise, sunset, perceivedTemperature, currentRainProbability, windSpeed, airHumidity, uvIndex, day1Name, day2Name, day3Name, day1ChanceOfRain, day2ChanceOfRain, day3ChanceOfRain };
+        let weatherData = { location, formattedLocalTime, formattedlocalHour, weatherCondition, temperatureCelsius, sunrise, sunset, perceivedTemperature, currentRainProbability, windSpeed, airHumidity, uvIndex, day1Name, day2Name, day3Name, day1ChanceOfRain, day2ChanceOfRain, day3ChanceOfRain };
 
         return weatherData;
     }
