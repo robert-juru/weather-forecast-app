@@ -4,12 +4,15 @@ const apiKey = 'cd21f6b65bf347d6a4e142840231310';
 let location = document.querySelector('.location').textContent;
 let apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
 let searchBar = document.querySelector('input[type="search"]');
-//unity of measure for data
+const hourlyForecastContainer = document.querySelector('.weather-hours');
 let tempUnit = "&deg;C";
 let tempUnitSup = "<sup>&degC</sup>";
 let windUnit = " km/h";
 let probabilityUnit = "%";
 const tempIntervals = [];
+const hourlyTemperatures = [];
+const hourlyChancesOfRain = [];
+const hours = [];
 
 async function searchLocation(event) {
     if (event.key === 'Enter') {
@@ -119,8 +122,8 @@ async function fetchWeatherData() {
         const day2Name = format(parseISO(data.forecast.forecastday[1].date), 'EEEE');
         const day3Name = format(parseISO(data.forecast.forecastday[2].date), 'EEEE');
 
-        tempIntervals.length = 0; //clearing the array to use the fresh fetched data
-        for (let i = 0; i < 3; i++) {
+        tempIntervals.length = 0; // clear the array to use the recently fetched data
+        for (let i = 0; i < 3; i++) { // get temp intervals for the 3 days
             let minTemp = Math.round(data.forecast.forecastday[i].day.mintemp_c) + tempUnit;
             let maxTemp = Math.round(data.forecast.forecastday[i].day.maxtemp_c) + tempUnit;
             let tempInterval = minTemp + " / " + maxTemp;
@@ -131,6 +134,55 @@ async function fetchWeatherData() {
         const day3ChanceOfRain = data.forecast.forecastday[2].day.daily_chance_of_rain + probabilityUnit;
 
         let weatherData = { location, formattedLocalTime, formattedlocalHour, weatherCondition, temperatureCelsius, sunrise, sunset, perceivedTemperature, currentRainProbability, windSpeed, airHumidity, uvIndex, day1Name, day2Name, day3Name, day1ChanceOfRain, day2ChanceOfRain, day3ChanceOfRain };
+
+        //today hourly forecast
+
+        // clear the arrays for temperature, chances of rain and hours to use the recently fetched data
+        hourlyTemperatures.length = 0;
+        hourlyChancesOfRain.length = 0;
+        hours.length = 0;
+
+        for (let i = 0; i < 24; i++) { //get hourly temperatures for today
+            let hourlyTemperature = Math.round(data.forecast.forecastday[0].hour[i].temp_c) + tempUnit;
+            hourlyTemperatures.push(hourlyTemperature);
+            let hourlyChanceOfRain = data.forecast.forecastday[1].hour[i].chance_of_rain + probabilityUnit;
+            hourlyChancesOfRain.push(hourlyChanceOfRain);
+            let hour = data.forecast.forecastday[0].hour[i].time.split(' ')[1];
+            hours.push(hour);
+
+            // console.log(hour)
+            // console.log(`ORA ${data.forecast.forecastday[0].hour[i].time} ` + hourlyChanceOfRain)
+        }
+
+        function createHourlyForecastCard() {
+            while (hourlyForecastContainer.firstChild) { 
+                hourlyForecastContainer.removeChild(hourlyForecastContainer.firstChild);
+            }
+            for (let i = 0; i < 24; i++) {
+                let hourlyForecastCard = document.createElement('article');
+                hourlyForecastCard.innerHTML = `
+                <p>${hours[i]}</p>
+                <p>
+                  <img
+                    class="weather-hours-icon"
+                    id="sunny"
+                    src="/src/images/weather-icons/sunny.svg"
+                    alt="sunny-weather"
+                  />
+                </p>
+                <p class="weather-hours-temperature">${hourlyTemperatures[i]}</p>
+                <div class="rain-chances-hours">
+                  <img
+                    src="/src/images/weather-details/rain_probability.svg"
+                    alt="rain probability"
+                  />
+                  <span>${hourlyChancesOfRain[i]}</span>
+                </div>
+              `
+                hourlyForecastContainer.appendChild(hourlyForecastCard);
+            }
+        }
+        createHourlyForecastCard();
 
         return weatherData;
     }
