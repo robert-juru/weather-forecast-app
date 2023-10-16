@@ -17,7 +17,7 @@ const hourlyChancesOfRain = [];
 const hours = [];
 let currentIndex;
 const cardsToShow = 4;
-
+const dayNames = ["Today", "Tomorrow"];
 
 async function searchLocation(event) {
     if (event.key === 'Enter') {
@@ -145,13 +145,16 @@ async function fetchWeatherData() {
         hourlyChancesOfRain.length = 0;
         hours.length = 0;
 
-        for (let i = 0; i < 24; i++) { //get hourly temperatures for today
-            let hourlyTemperature = Math.round(data.forecast.forecastday[0].hour[i].temp_c) + tempUnit;
-            hourlyTemperatures.push(hourlyTemperature);
-            let hourlyChanceOfRain = data.forecast.forecastday[0].hour[i].chance_of_rain + probabilityUnit;
-            hourlyChancesOfRain.push(hourlyChanceOfRain);
-            let hour = data.forecast.forecastday[0].hour[i].time.split(' ')[1];
-            hours.push(hour);
+        for (let i = 0; i < 2; i++) { //get today&tomorrow
+            const dayName = dayNames[i];
+            for (let j = 0; j < 24; j++) { //get hourly temperatures
+                let hourlyTemperature = Math.round(data.forecast.forecastday[i].hour[j].temp_c) + tempUnit;
+                hourlyTemperatures.push(hourlyTemperature);
+                let hourlyChanceOfRain = data.forecast.forecastday[i].hour[j].chance_of_rain + probabilityUnit;
+                hourlyChancesOfRain.push(hourlyChanceOfRain);
+                let hour = data.forecast.forecastday[i].hour[j].time.split(' ')[1];
+                hours.push(hour);
+            }
         }
 
         currentIndex = Number(formattedlocalHour.substring(0, 2)); //track the current index for updateHourlyDisplay
@@ -179,6 +182,7 @@ function updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChan
         if (i < hours.length) {
             const hourlyForecastCard = document.createElement('article');
             hourlyForecastCard.innerHTML = `
+            <p class="day-label">${dayNames[Math.floor(i/24)]}</p>
             <p>${hours[i]}</p>
             <p>
                 <img

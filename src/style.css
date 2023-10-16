@@ -90,7 +90,7 @@ input[type="search"]:focus {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 16px;
+  padding: 8px 16px;
 }
 
 .today-weather-header {
@@ -165,6 +165,9 @@ sup {
   display:flex;
 }
 
+.day-label {
+  font-size:12px
+}
 /* Right Section */
 
 .right-section {
