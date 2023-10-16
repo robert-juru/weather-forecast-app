@@ -18,11 +18,13 @@ const hours = [];
 let currentIndex;
 const cardsToShow = 4;
 const dayNames = ["Today", "Tomorrow"];
+let hourlyWeatherIcons = [];
 
 async function searchLocation(event) {
     if (event.key === 'Enter') {
         try {
             const weatherData = await fetchWeatherData();
+            // currentWeatherLogoContainer.appendChild(weatherData.currentWeatherIcon)
             document.querySelector('.location').textContent = weatherData.location;
             document.querySelector('.date').textContent = weatherData.formattedLocalTime;
             document.querySelector('.today-degrees').innerHTML = weatherData.temperatureCelsius + tempUnitSup;
@@ -92,6 +94,7 @@ async function fetchWeatherData() {
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
+        console.log(data)
 
         // main current weather + location
         const cityName = data.location.name;
@@ -146,7 +149,6 @@ async function fetchWeatherData() {
         hours.length = 0;
 
         for (let i = 0; i < 2; i++) { //get today&tomorrow
-            const dayName = dayNames[i];
             for (let j = 0; j < 24; j++) { //get hourly temperatures
                 let hourlyTemperature = Math.round(data.forecast.forecastday[i].hour[j].temp_c) + tempUnit;
                 hourlyTemperatures.push(hourlyTemperature);
@@ -154,8 +156,14 @@ async function fetchWeatherData() {
                 hourlyChancesOfRain.push(hourlyChanceOfRain);
                 let hour = data.forecast.forecastday[i].hour[j].time.split(' ')[1];
                 hours.push(hour);
+                let hourlyWeatherIcon=data.forecast.forecastday[i].hour[j].condition.icon;
+                hourlyWeatherIcons.push(hourlyWeatherIcon);
             }
         }
+
+        //weather image
+        // currentWeatherIcon = data.current.condition.icon;
+        // const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
 
         currentIndex = Number(formattedlocalHour.substring(0, 2)); //track the current index for updateHourlyDisplay
 
@@ -182,13 +190,12 @@ function updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChan
         if (i < hours.length) {
             const hourlyForecastCard = document.createElement('article');
             hourlyForecastCard.innerHTML = `
-            <p class="day-label">${dayNames[Math.floor(i/24)]}</p>
+            <p class="day-label">${dayNames[Math.floor(i / 24)]}</p>
             <p>${hours[i]}</p>
             <p>
                 <img
                 class="weather-hours-icon"
-                id="sunny"
-                src="/src/images/weather-icons/sunny.svg"
+                src="${hourlyWeatherIcons[i]}"
                 alt="sunny-weather"
                 />
             </p>
