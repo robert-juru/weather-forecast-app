@@ -7,6 +7,7 @@ let searchBar = document.querySelector('input[type="search"]');
 const hourlyForecastContainer = document.querySelector('.weather-hours');
 const arrowLeft = document.getElementById('arrow-left');
 const arrowRight = document.getElementById('arrow-right');
+const currentWeatherLogoContainer = document.querySelector('.today-temperature');
 let tempUnit = "&deg;C";
 let tempUnitSup = "<sup>&degC</sup>";
 let windUnit = " km/h";
@@ -19,12 +20,16 @@ let currentIndex;
 const cardsToShow = 4;
 const dayNames = ["Today", "Tomorrow"];
 let hourlyWeatherIcons = [];
+let nextDaysChancesOfRain = [];
+let nextDaysWeatherLogo = [];
+const currentWeatherIcon = new Image();
+currentWeatherIcon.classList.add('weather-icon')
+let currentHour;
 
 async function searchLocation(event) {
     if (event.key === 'Enter') {
         try {
             const weatherData = await fetchWeatherData();
-            // currentWeatherLogoContainer.appendChild(weatherData.currentWeatherIcon)
             document.querySelector('.location').textContent = weatherData.location;
             document.querySelector('.date').textContent = weatherData.formattedLocalTime;
             document.querySelector('.today-degrees').innerHTML = weatherData.temperatureCelsius + tempUnitSup;
@@ -44,9 +49,14 @@ async function searchLocation(event) {
             document.getElementById('day1-temp-interval').innerHTML = tempIntervals[0];
             document.getElementById('day2-temp-interval').innerHTML = tempIntervals[1];
             document.getElementById('day3-temp-interval').innerHTML = tempIntervals[2];
-            document.querySelector('.day1-rain-chance').textContent = weatherData.day1ChanceOfRain;
-            document.querySelector('.day2-rain-chance').textContent = weatherData.day2ChanceOfRain;
-            document.querySelector('.day3-rain-chance').textContent = weatherData.day3ChanceOfRain;
+            document.getElementById('day1-weather-icon').setAttribute('src', nextDaysWeatherLogo[0]);
+            document.getElementById('day2-weather-icon').setAttribute('src', nextDaysWeatherLogo[1]);
+            document.getElementById('day3-weather-icon').setAttribute('src', nextDaysWeatherLogo[2]);
+            document.querySelector('.day1-rain-chance').textContent = nextDaysChancesOfRain[0];
+            document.querySelector('.day2-rain-chance').textContent = nextDaysChancesOfRain[1];
+            document.querySelector('.day3-rain-chance').textContent = nextDaysChancesOfRain[2];
+
+
 
         } catch (error) {
             console.error('An error occurred:', error.message);
@@ -76,9 +86,12 @@ async function searchInitialLocation() {
         document.getElementById('day1-temp-interval').innerHTML = tempIntervals[0];
         document.getElementById('day2-temp-interval').innerHTML = tempIntervals[1];
         document.getElementById('day3-temp-interval').innerHTML = tempIntervals[2];
-        document.querySelector('.day1-rain-chance').textContent = weatherData.day1ChanceOfRain;
-        document.querySelector('.day2-rain-chance').textContent = weatherData.day2ChanceOfRain;
-        document.querySelector('.day3-rain-chance').textContent = weatherData.day3ChanceOfRain;
+        document.getElementById('day1-weather-icon').setAttribute('src', nextDaysWeatherLogo[0]);
+        document.getElementById('day2-weather-icon').setAttribute('src', nextDaysWeatherLogo[1]);
+        document.getElementById('day3-weather-icon').setAttribute('src', nextDaysWeatherLogo[2]);
+        document.querySelector('.day1-rain-chance').textContent = nextDaysChancesOfRain[0];
+        document.querySelector('.day2-rain-chance').textContent = nextDaysChancesOfRain[1];
+        document.querySelector('.day3-rain-chance').textContent = nextDaysChancesOfRain[2];
 
 
     } catch (error) {
@@ -106,9 +119,12 @@ async function fetchWeatherData() {
         const localHour = localTime.split(' ')[1];
         const parsedLocalHour = parse(localHour, 'H:mm', new Date());
         const formattedlocalHour = format(parsedLocalHour, 'HH:mm');
+        currentHour = Number(formattedlocalHour.substring(0, 2))
         const formattedLocalTime = format(parseISO(localTime.split(' ')[0]), 'EEEE, MMMM dd yyyy')
         const sunrise = data.forecast.forecastday[0].astro.sunrise;
         const sunset = data.forecast.forecastday[0].astro.sunset;
+
+
 
         //real-time weather details
         const perceivedTemperature = Math.round(data.current.feelslike_c);
@@ -130,17 +146,18 @@ async function fetchWeatherData() {
         const day3Name = format(parseISO(data.forecast.forecastday[2].date), 'EEEE');
 
         tempIntervals.length = 0; // clear the array to use the recently fetched data
+        nextDaysChancesOfRain.length = 0;
+        nextDaysWeatherLogo.length = 0;
         for (let i = 0; i < 3; i++) { // get temp intervals for the 3 days
             let minTemp = Math.round(data.forecast.forecastday[i].day.mintemp_c) + tempUnit;
             let maxTemp = Math.round(data.forecast.forecastday[i].day.maxtemp_c) + tempUnit;
             let tempInterval = minTemp + " / " + maxTemp;
             tempIntervals.push(tempInterval)
+            let chanceOfRain = data.forecast.forecastday[i].day.daily_chance_of_rain + probabilityUnit;
+            nextDaysChancesOfRain.push(chanceOfRain);
+            let weatherIcon = data.forecast.forecastday[i].day.condition.icon;
+            nextDaysWeatherLogo.push(weatherIcon)
         }
-        const day1ChanceOfRain = data.forecast.forecastday[0].day.daily_chance_of_rain + probabilityUnit;
-        const day2ChanceOfRain = data.forecast.forecastday[1].day.daily_chance_of_rain + probabilityUnit;
-        const day3ChanceOfRain = data.forecast.forecastday[2].day.daily_chance_of_rain + probabilityUnit;
-
-
         //today hourly forecast
 
         // clear the arrays for temperature, chances of rain and hours to use the recently fetched data
@@ -156,7 +173,7 @@ async function fetchWeatherData() {
                 hourlyChancesOfRain.push(hourlyChanceOfRain);
                 let hour = data.forecast.forecastday[i].hour[j].time.split(' ')[1];
                 hours.push(hour);
-                let hourlyWeatherIcon=data.forecast.forecastday[i].hour[j].condition.icon;
+                let hourlyWeatherIcon = data.forecast.forecastday[i].hour[j].condition.icon;
                 hourlyWeatherIcons.push(hourlyWeatherIcon);
             }
         }
@@ -165,11 +182,12 @@ async function fetchWeatherData() {
         // currentWeatherIcon = data.current.condition.icon;
         // const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
 
-        currentIndex = Number(formattedlocalHour.substring(0, 2)); //track the current index for updateHourlyDisplay
+
+        currentIndex = currentHour; //track the current index for updateHourlyDisplay
 
         updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChancesOfRain);
 
-        let weatherData = { location, formattedLocalTime, formattedlocalHour, weatherCondition, temperatureCelsius, sunrise, sunset, perceivedTemperature, currentRainProbability, windSpeed, airHumidity, uvIndex, day1Name, day2Name, day3Name, day1ChanceOfRain, day2ChanceOfRain, day3ChanceOfRain };
+        let weatherData = { location, formattedLocalTime, formattedlocalHour, weatherCondition, temperatureCelsius, sunrise, sunset, perceivedTemperature, currentRainProbability, windSpeed, airHumidity, uvIndex, day1Name, day2Name, day3Name };
 
         return weatherData;
     }
@@ -188,6 +206,8 @@ function updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChan
     // Create and display cards for the current index and the next 'cardsToShow' hours.
     for (let i = currentIndex; i < currentIndex + cardsToShow; i++) {
         if (i < hours.length) {
+            currentWeatherLogoContainer.removeChild(currentWeatherLogoContainer.lastChild)
+            currentWeatherIcon.src = hourlyWeatherIcons[currentHour];
             const hourlyForecastCard = document.createElement('article');
             hourlyForecastCard.innerHTML = `
             <p class="day-label">${dayNames[Math.floor(i / 24)]}</p>
@@ -208,6 +228,8 @@ function updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChan
                 <span>${hourlyChancesOfRain[i]}</span>
             </div>
             `;
+
+            currentWeatherLogoContainer.appendChild(currentWeatherIcon)
             hourlyForecastContainer.appendChild(hourlyForecastCard);
         }
     }
