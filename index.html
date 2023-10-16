@@ -49,9 +49,23 @@
               alt="sunny-weather"
             />
           </div>
-          <section class="weather-hours">
-            
-          </section>
+
+          <div class="weather-hours-container">
+            <img
+              id="arrow-left"
+              class="arrow left"
+              src="/src/images/carousel-slide-arrows/left-arrow.svg"
+              alt="left-arrow"
+            />
+            <section class="weather-hours"></section>
+            <img
+              id="arrow-right"
+              class="arrow right"
+              src="/src/images/carousel-slide-arrows/right-arrow.svg"
+              alt="right-arrow"
+            />
+          </div>
+
           <section class="sun-phase">
             <article id="sunrise">
               <img
@@ -90,7 +104,9 @@
                 />
                 <p>Perceived Temperature</p>
               </div>
-              <p  id="perceived-temperature-value" class="weather-detail-value">24&degC</p>
+              <p id="perceived-temperature-value" class="weather-detail-value">
+                24&degC
+              </p>
             </li>
             <hr />
             <li class="weather-detail-list-elem">
@@ -101,7 +117,9 @@
                 />
                 <p>Rain Probability</p>
               </div>
-              <p id="rain-probability-value" class="weather-detail-value">53%</p>
+              <p id="rain-probability-value" class="weather-detail-value">
+                53%
+              </p>
             </li>
             <hr />
             <li class="weather-detail-list-elem">
@@ -139,66 +157,72 @@
           </ul>
         </section>
         <section class="weather-forecast-section">
-        <h3>Forecast for 3 days</h3>
-        <div class="weather-forecast-container">
-          <article class="weather-forecast-day">
-            <p class="day1-name">Today</p>
-            <p>
-              <img
-                class="weather-days-icon"
-                id="sunny"
-                src="/src/images/weather-icons/sunny.svg"
-                alt="sunny-weather"
-              />
-            </p>
-            <p id="day1-temp-interval" class="weather-hours-temperature">14&degC / 25&degC</p>
-            <div class="rain-chances-hours">
-              <img
-                src="/src/images/weather-details/rain_probability.svg"
-                alt="rain probability"
-              />
-              <span class="day1-rain-chance">11%</span>
-            </div>
-          </article>
-          <article class="weather-forecast-day">
-            <p class="day2-name">Friday</p>
-            <p>
-              <img
-                class="weather-days-icon"
-                id="sunny"
-                src="/src/images/weather-icons/sunny.svg"
-                alt="sunny-weather"
-              />
-            </p>
-            <p id="day2-temp-interval" class="weather-hours-temperature">11&degC / 23&degC</p>
-            <div class="rain-chances-hours">
-              <img
-                src="/src/images/weather-details/rain_probability.svg"
-                alt="rain probability"
-              />
-              <span class="day2-rain-chance">7%</span>
-            </div>
-          </article>
-          <article class="weather-forecast-day">
-            <p class="day3-name">Saturday</p>
-            <p>
-              <img
-                class="weather-days-icon"
-                id="sunny"
-                src="/src/images/weather-icons/sunny.svg"
-                alt="sunny-weather"
-              />
-            </p>
-            <p id="day3-temp-interval" class="weather-hours-temperature">10&degC / 21&degC</p>
-            <div class="rain-chances-hours">
-              <img
-                src="/src/images/weather-details/rain_probability.svg"
-                alt="rain probability"
-              />
-              <span class="day3-rain-chance">15%</span>
-            </div>
-          </article>
-        </div>
+          <h3>Forecast for 3 days</h3>
+          <div class="weather-forecast-container">
+            <article class="weather-forecast-day">
+              <p class="day1-name">Today</p>
+              <p>
+                <img
+                  class="weather-days-icon"
+                  id="sunny"
+                  src="/src/images/weather-icons/sunny.svg"
+                  alt="sunny-weather"
+                />
+              </p>
+              <p id="day1-temp-interval" class="weather-hours-temperature">
+                14&degC / 25&degC
+              </p>
+              <div class="rain-chances-hours">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain probability"
+                />
+                <span class="day1-rain-chance">11%</span>
+              </div>
+            </article>
+            <article class="weather-forecast-day">
+              <p class="day2-name">Friday</p>
+              <p>
+                <img
+                  class="weather-days-icon"
+                  id="sunny"
+                  src="/src/images/weather-icons/sunny.svg"
+                  alt="sunny-weather"
+                />
+              </p>
+              <p id="day2-temp-interval" class="weather-hours-temperature">
+                11&degC / 23&degC
+              </p>
+              <div class="rain-chances-hours">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain probability"
+                />
+                <span class="day2-rain-chance">7%</span>
+              </div>
+            </article>
+            <article class="weather-forecast-day">
+              <p class="day3-name">Saturday</p>
+              <p>
+                <img
+                  class="weather-days-icon"
+                  id="sunny"
+                  src="/src/images/weather-icons/sunny.svg"
+                  alt="sunny-weather"
+                />
+              </p>
+              <p id="day3-temp-interval" class="weather-hours-temperature">
+                10&degC / 21&degC
+              </p>
+              <div class="rain-chances-hours">
+                <img
+                  src="/src/images/weather-details/rain_probability.svg"
+                  alt="rain probability"
+                />
+                <span class="day3-rain-chance">15%</span>
+              </div>
+            </article>
+          </div>
         </section>
       </div>
     </div>
