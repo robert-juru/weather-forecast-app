@@ -73,6 +73,7 @@ input[type="search"]:focus {
 }
 
 .weather-hours {
+  flex:1;
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(4, 1fr);
@@ -145,7 +146,7 @@ sup {
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
-  padding: 0px 24px;
+  padding: 0px 48px;
 }
 
 #sunrise,
@@ -158,6 +159,10 @@ sup {
 .sunrise-title,
 .sunset-title {
   font-size: 20px;
+}
+
+.weather-hours-container {
+  display:flex;
 }
 
 /* Right Section */

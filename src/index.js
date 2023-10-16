@@ -5,6 +5,8 @@ let location = document.querySelector('.location').textContent;
 let apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
 let searchBar = document.querySelector('input[type="search"]');
 const hourlyForecastContainer = document.querySelector('.weather-hours');
+const arrowLeft = document.getElementById('arrow-left');
+const arrowRight = document.getElementById('arrow-right');
 let tempUnit = "&deg;C";
 let tempUnitSup = "<sup>&degC</sup>";
 let windUnit = " km/h";
@@ -13,6 +15,9 @@ const tempIntervals = [];
 const hourlyTemperatures = [];
 const hourlyChancesOfRain = [];
 const hours = [];
+let currentIndex;
+const cardsToShow = 4;
+
 
 async function searchLocation(event) {
     if (event.key === 'Enter') {
@@ -87,7 +92,6 @@ async function fetchWeatherData() {
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-        console.log(data)
 
         // main current weather + location
         const cityName = data.location.name;
@@ -133,7 +137,6 @@ async function fetchWeatherData() {
         const day2ChanceOfRain = data.forecast.forecastday[1].day.daily_chance_of_rain + probabilityUnit;
         const day3ChanceOfRain = data.forecast.forecastday[2].day.daily_chance_of_rain + probabilityUnit;
 
-        let weatherData = { location, formattedLocalTime, formattedlocalHour, weatherCondition, temperatureCelsius, sunrise, sunset, perceivedTemperature, currentRainProbability, windSpeed, airHumidity, uvIndex, day1Name, day2Name, day3Name, day1ChanceOfRain, day2ChanceOfRain, day3ChanceOfRain };
 
         //today hourly forecast
 
@@ -145,44 +148,17 @@ async function fetchWeatherData() {
         for (let i = 0; i < 24; i++) { //get hourly temperatures for today
             let hourlyTemperature = Math.round(data.forecast.forecastday[0].hour[i].temp_c) + tempUnit;
             hourlyTemperatures.push(hourlyTemperature);
-            let hourlyChanceOfRain = data.forecast.forecastday[1].hour[i].chance_of_rain + probabilityUnit;
+            let hourlyChanceOfRain = data.forecast.forecastday[0].hour[i].chance_of_rain + probabilityUnit;
             hourlyChancesOfRain.push(hourlyChanceOfRain);
             let hour = data.forecast.forecastday[0].hour[i].time.split(' ')[1];
             hours.push(hour);
-
-            // console.log(hour)
-            // console.log(`ORA ${data.forecast.forecastday[0].hour[i].time} ` + hourlyChanceOfRain)
         }
 
-        function createHourlyForecastCard() {
-            while (hourlyForecastContainer.firstChild) { 
-                hourlyForecastContainer.removeChild(hourlyForecastContainer.firstChild);
-            }
-            for (let i = 0; i < 24; i++) {
-                let hourlyForecastCard = document.createElement('article');
-                hourlyForecastCard.innerHTML = `
-                <p>${hours[i]}</p>
-                <p>
-                  <img
-                    class="weather-hours-icon"
-                    id="sunny"
-                    src="/src/images/weather-icons/sunny.svg"
-                    alt="sunny-weather"
-                  />
-                </p>
-                <p class="weather-hours-temperature">${hourlyTemperatures[i]}</p>
-                <div class="rain-chances-hours">
-                  <img
-                    src="/src/images/weather-details/rain_probability.svg"
-                    alt="rain probability"
-                  />
-                  <span>${hourlyChancesOfRain[i]}</span>
-                </div>
-              `
-                hourlyForecastContainer.appendChild(hourlyForecastCard);
-            }
-        }
-        createHourlyForecastCard();
+        currentIndex = Number(formattedlocalHour.substring(0, 2)); //track the current index for updateHourlyDisplay
+
+        updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChancesOfRain);
+
+        let weatherData = { location, formattedLocalTime, formattedlocalHour, weatherCondition, temperatureCelsius, sunrise, sunset, perceivedTemperature, currentRainProbability, windSpeed, airHumidity, uvIndex, day1Name, day2Name, day3Name, day1ChanceOfRain, day2ChanceOfRain, day3ChanceOfRain };
 
         return weatherData;
     }
@@ -190,6 +166,60 @@ async function fetchWeatherData() {
         console.error('An error occurred:', error.message);
     }
 }
+
+// Define the updateHourlyDisplay function outside fetchWeatherData.
+function updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChancesOfRain) {
+    const cardsToShow = 4;
+    // Clear the container
+    while (hourlyForecastContainer.firstChild) {
+        hourlyForecastContainer.removeChild(hourlyForecastContainer.firstChild);
+    }
+    // Create and display cards for the current index and the next 'cardsToShow' hours.
+    for (let i = currentIndex; i < currentIndex + cardsToShow; i++) {
+        if (i < hours.length) {
+            const hourlyForecastCard = document.createElement('article');
+            hourlyForecastCard.innerHTML = `
+            <p>${hours[i]}</p>
+            <p>
+                <img
+                class="weather-hours-icon"
+                id="sunny"
+                src="/src/images/weather-icons/sunny.svg"
+                alt="sunny-weather"
+                />
+            </p>
+            <p class="weather-hours-temperature">${hourlyTemperatures[i]}</p>
+            <div class="rain-chances-hours">
+                <img
+                src="/src/images/weather-details/rain_probability.svg"
+                alt="rain probability"
+                />
+                <span>${hourlyChancesOfRain[i]}</span>
+            </div>
+            `;
+            hourlyForecastContainer.appendChild(hourlyForecastCard);
+        }
+    }
+}
+
+updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChancesOfRain);
+
+arrowLeft.addEventListener('click', () => {
+    console.log("current index before --: " + currentIndex);
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChancesOfRain);
+    }
+});
+
+arrowRight.addEventListener('click', () => {
+    // let currentIndex = Number(formattedlocalHour.substring(0, 2));
+    console.log("current index before ++: " + currentIndex);
+    if (currentIndex < Number(hours.length - cardsToShow)) {
+        currentIndex++;
+        updateHourlyDisplay(currentIndex, hours, hourlyTemperatures, hourlyChancesOfRain);
+    }
+});
 
 searchBar.addEventListener('keydown', searchLocation);
 document.addEventListener('DOMContentLoaded', searchInitialLocation)
