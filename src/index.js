@@ -2,6 +2,7 @@ import { format, parseISO, parse } from 'date-fns';
 
 const apiKey = 'cd21f6b65bf347d6a4e142840231310';
 let location = document.querySelector('.location').textContent;
+console.log(location)
 let apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
 let searchBar = document.querySelector('input[type="search"]');
 const hourlyForecastContainer = document.querySelector('.weather-hours');
@@ -25,7 +26,7 @@ let nextDaysWeatherLogo = [];
 const currentWeatherIcon = new Image();
 currentWeatherIcon.classList.add('weather-icon')
 let currentHour;
-
+    
 async function searchLocation(event) {
     if (event.key === 'Enter') {
         try {
