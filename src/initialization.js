@@ -3,6 +3,7 @@ import UI from './weather-display';
 
 async function initializeApp() {
     let currentIndex = 0;
+    UI.searchBar.value = '';
     const searchBar = document.querySelector('input[type="search"]');
     const arrowLeft = document.getElementById('arrow-left');
     const arrowRight = document.getElementById('arrow-right');

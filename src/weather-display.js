@@ -10,6 +10,7 @@ const UI = (function () {
   const searchBar = document.querySelector('input[type="search"]');
   const hourlyForecastContainer = document.querySelector('.weather-hours');
   const currentWeatherLogoContainer = document.querySelector('.today-temperature');
+  const appHeader = document.querySelector('.app-header');
   const currentWeatherIcon = new Image();
   currentWeatherIcon.classList.add('weather-icon');
   //data storage and updating
@@ -32,10 +33,13 @@ const UI = (function () {
       if (location) {
         const data = await weatherData.fetchWeatherData(location);
         updateWeatherData(data);
+        removeErrorMessage()
         return data;
       }
     } catch (error) {
       console.error('An error occurred:', error.message);
+      removeErrorMessage()
+      createErrorMessage()
     }
   }
 
@@ -107,6 +111,20 @@ const UI = (function () {
   }
   updateHourlyDisplay();
 
+  function removeErrorMessage() {
+    const existingError = document.querySelector('.error-message');
+    if (existingError) {
+      existingError.remove();
+    }
+  }
+
+  function createErrorMessage() {
+    const errorMessage = document.createElement('div');
+    errorMessage.backgroundColor ='#9C2B2E';
+    errorMessage.classList.add('error-message');
+    errorMessage.innerHTML = "⚠️ Location not found.";
+    appHeader.appendChild(errorMessage);
+  }
   return { searchLocation, updateWeatherData, updateHourlyDisplay, searchBar, tempIntervals, hourlyTemperatures, hourlyChancesOfRain, hours, hourlyWeatherIcons, nextDaysChancesOfRain, nextDaysWeatherLogo, tempUnit, tempUnitSup, probabilityUnit, currentIndex, cardsToShow }
 })();
 export default UI;

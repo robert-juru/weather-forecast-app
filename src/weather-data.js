@@ -15,7 +15,9 @@ const weatherData = (function () {
             apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
         }
         try {
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl, {
+                mode: 'cors'
+            });
             const data = await response.json();
 
             const current = currentWeather(data);
@@ -24,7 +26,7 @@ const weatherData = (function () {
             const hourly = hourlyForecast(data);
 
             return { current, currentDetails, daily };
-
+            // 
         } catch (error) {
             console.error('An error occurred:', error.message);
             throw error;
@@ -51,7 +53,6 @@ const weatherData = (function () {
     }
 
     function currentWeather(data) {
-        // Data extraction logic for current weather 
         const cityName = data.location.name;
         const countryName = data.location.country;
         location = cityName + ', ' + countryName;
@@ -72,7 +73,6 @@ const weatherData = (function () {
     }
 
     function dailyForecasts(data) {
-        // Data extraction logic for daily forecasts here
         const day1Name = "Today";
         const day2Name = format(parseISO(data.forecast.forecastday[1].date), 'EEEE');
         const day3Name = format(parseISO(data.forecast.forecastday[2].date), 'EEEE');
@@ -97,7 +97,6 @@ const weatherData = (function () {
     }
 
     function hourlyForecast(data) {
-        // Data extraction logic for hourly forecasts here
         // clear the arrays for temperature, chances of rain and hours to use the recently fetched data
         UI.hourlyTemperatures.length = 0;
         UI.hourlyChancesOfRain.length = 0;
@@ -117,7 +116,7 @@ const weatherData = (function () {
         }
     }
     return {
-        fetchWeatherData, location, currentWeatherData, currentWeatherDetailsData, dailyForecastsData, currentWeather
+        fetchWeatherData, currentWeather, location, currentWeatherData, currentWeatherDetailsData, dailyForecastsData,
     };
 })();
 export default weatherData;
