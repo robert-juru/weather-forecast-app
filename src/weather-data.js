@@ -4,7 +4,7 @@ import UI from './weather-display.js';
 const weatherData = (function () {
     const apiKey = 'cd21f6b65bf347d6a4e142840231310';
     let location = document.querySelector('.location').textContent;
-    let apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
+    let apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
     let currentWeatherDetailsData = {};
     let currentWeatherData = {};
     let dailyForecastsData = {};
@@ -12,7 +12,7 @@ const weatherData = (function () {
     async function fetchWeatherData(location) {
         if (UI.searchBar.value !== '') {
             location = UI.searchBar.value;
-            apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
+            apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=3`;
         }
         try {
             const response = await fetch(apiUrl, {

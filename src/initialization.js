@@ -1,5 +1,5 @@
-import weatherData from './weather-data';
-import UI from './weather-display';
+import weatherData from './weather-data.js';
+import UI from './weather-display.js';
 
 async function initializeApp() {
     let currentIndex = 0;
