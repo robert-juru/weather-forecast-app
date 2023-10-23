@@ -96,7 +96,7 @@ const UI = (function () {
           <p class="weather-hours-temperature">${hourlyTemperatures[i]}</p>
           <div class="rain-chances-hours">
               <img
-              src="/dist/images/weather-details/rain_probability.svg"
+              src="./images/weather-details/rain_probability.svg"
               alt="rain probability"
               />
               <span>${hourlyChancesOfRain[i]}</span>
