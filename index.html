@@ -96,7 +96,7 @@
                   src="./images/weather-details/perceived_temperature.svg"
                   alt="thermometer icon"
                 />
-                <p>Perceived Temperature</p>
+                <p class="weather-detail">Perceived Temperature</p>
               </div>
               <p id="perceived-temperature-value" class="weather-detail-value">
               </p>
@@ -108,7 +108,7 @@
                   src="./images/weather-details/rain_probability.svg"
                   alt="rain icon"
                 />
-                <p>Rain Probability</p>
+                <p class="weather-detail" >Rain Probability</p>
               </div>
               <p id="rain-probability-value" class="weather-detail-value">
                 
@@ -121,7 +121,7 @@
                   src="./images/weather-details/wind_speed.svg"
                   alt="wind icon"
                 />
-                <p>Wind Speed</p>
+                <p class="weather-detail" >Wind Speed</p>
               </div>
               <p id="wind-speed-value" class="weather-detail-value"></p>
             </li>
@@ -132,7 +132,7 @@
                   src="./images/weather-details/humidity.svg"
                   alt="humidity raindrop icon"
                 />
-                <p>Air Humidity</p>
+                <p class="weather-detail">Air Humidity</p>
               </div>
               <p id="air-humidity-value" class="weather-detail-value"></p>
             </li>
@@ -143,7 +143,7 @@
                   src="./images/weather-details/uv_index.svg"
                   alt="uv index sunny icon"
                 />
-                <p>UV Index</p>
+                <p class="weather-detail">UV Index</p>
               </div>
               <p id="uv-index-value" class="weather-detail-value"></p>
             </li>
@@ -153,54 +153,57 @@
           <h3>Forecast for 3 days</h3>
           <div class="weather-forecast-container">
             <article class="weather-forecast-day">
-              <p class="day1-name">Today</p>
+              <p class="day-name" id="day1-name">Today</p>
               <img
               class="weather-days-icon"
               id="day1-weather-icon"
               alt="day1-weather-icon"
             />
-              <p id="day1-temp-interval" class="weather-hours-temperature">
+              <p id="day1-temp-interval" class="forecast weather-hours-temperature">
               </p>
               <div class="rain-chances-hours">
                 <img
                   src="./images/weather-details/rain_probability.svg"
                   alt="rain probability"
+                  class="rain-chance-icon"
                 />
-                <span class="day1-rain-chance"></span>
+                <span class="rain-chance" id="day1-rain-chance"></span>
               </div>
             </article>
             <article class="weather-forecast-day">
-              <p class="day2-name">Friday</p>
+              <p class="day-name" id="day2-name">Friday</p>
                 <img
                   class="weather-days-icon"
                   id="day2-weather-icon"
                   alt="day2-weather-icon"
                 />
-              <p id="day2-temp-interval" class="weather-hours-temperature">
+              <p id="day2-temp-interval" class="forecast weather-hours-temperature">
               </p>
               <div class="rain-chances-hours">
                 <img
                   src="./images/weather-details/rain_probability.svg"
                   alt="rain probability"
+                  class="rain-chance-icon"
                 />
-                <span class="day2-rain-chance"></span>
+                <span class="rain-chance" id="day2-rain-chance"></span>
               </div>
             </article>
             <article class="weather-forecast-day">
-              <p class="day3-name">Saturday</p>
+              <p class="day-name" id="day3-name">Saturday</p>
                 <img
                   class="weather-days-icon"
                   id="day3-weather-icon"
                   alt="day3-weather-icon"
                 />
-              <p id="day3-temp-interval" class="weather-hours-temperature">
+              <p id="day3-temp-interval" class="forecast weather-hours-temperature">
               </p>
               <div class="rain-chances-hours">
                 <img
                   src="./images/weather-details/rain_probability.svg"
                   alt="rain probability"
+                  class="rain-chance-icon"
                 />
-                <span class="day3-rain-chance"></span>
+                <span class="rain-chance" id="day3-rain-chance"></span>
               </div>
             </article>
           </div>
