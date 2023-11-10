@@ -24,7 +24,6 @@ const UI = (function () {
   let currentIndex;
   let currentHour;
   const cardsToShow = 4;
-
   async function searchLocation() {
     try {
       const searchInput = document.getElementById('search');
@@ -57,18 +56,18 @@ const UI = (function () {
     document.getElementById('wind-speed-value').textContent = weatherData.currentDetails.windSpeed + windUnit;
     document.getElementById('air-humidity-value').textContent = weatherData.currentDetails.airHumidity + probabilityUnit;
     document.getElementById('uv-index-value').textContent = weatherData.currentDetails.uvIndex;
-    document.querySelector('.day1-name').textContent = weatherData.daily.day1Name;
-    document.querySelector('.day2-name').textContent = weatherData.daily.day2Name;
-    document.querySelector('.day3-name').textContent = weatherData.daily.day3Name;
+    document.querySelector('#day1-name').textContent = weatherData.daily.day1Name;
+    document.querySelector('#day2-name').textContent = weatherData.daily.day2Name;
+    document.querySelector('#day3-name').textContent = weatherData.daily.day3Name;
     document.getElementById('day1-temp-interval').innerHTML = tempIntervals[0];
     document.getElementById('day2-temp-interval').innerHTML = tempIntervals[1];
     document.getElementById('day3-temp-interval').innerHTML = tempIntervals[2];
     document.getElementById('day1-weather-icon').setAttribute('src', nextDaysWeatherLogo[0]);
     document.getElementById('day2-weather-icon').setAttribute('src', nextDaysWeatherLogo[1]);
     document.getElementById('day3-weather-icon').setAttribute('src', nextDaysWeatherLogo[2]);
-    document.querySelector('.day1-rain-chance').textContent = nextDaysChancesOfRain[0];
-    document.querySelector('.day2-rain-chance').textContent = nextDaysChancesOfRain[1];
-    document.querySelector('.day3-rain-chance').textContent = nextDaysChancesOfRain[2];
+    document.querySelector('#day1-rain-chance').textContent = nextDaysChancesOfRain[0];
+    document.querySelector('#day2-rain-chance').textContent = nextDaysChancesOfRain[1];
+    document.querySelector('#day3-rain-chance').textContent = nextDaysChancesOfRain[2];
     currentHour = weatherData.current.currentHour;
   }
 
@@ -77,6 +76,7 @@ const UI = (function () {
     while (hourlyForecastContainer.firstChild) {
       hourlyForecastContainer.removeChild(hourlyForecastContainer.firstChild);
     }
+    // const cardsToShow = window.innerWidth < 500 ? 3 : 4;
     // Create and display cards for the current index and the next 'cardsToShow' hours.
     for (let i = currentIndex; i < currentIndex + cardsToShow; i++) {
       if (i < hours.length) {
@@ -85,7 +85,7 @@ const UI = (function () {
         const hourlyForecastCard = document.createElement('article');
         hourlyForecastCard.innerHTML = `
           <p class="day-label">${dayNames[Math.floor(i / 24)]}</p>
-          <p>${hours[i]}</p>
+          <p class="hour-label">${hours[i]}</p>
           <p>
               <img
               class="weather-hours-icon"
@@ -98,8 +98,9 @@ const UI = (function () {
               <img
               src="./images/weather-details/rain_probability.svg"
               alt="rain probability"
+              class="rain-chance-icon"
               />
-              <span>${hourlyChancesOfRain[i]}</span>
+              <span class="rain-chance">${hourlyChancesOfRain[i]}</span>
           </div>
           `;
 
@@ -120,7 +121,7 @@ const UI = (function () {
 
   function createErrorMessage() {
     const errorMessage = document.createElement('div');
-    errorMessage.backgroundColor ='#9C2B2E';
+    errorMessage.backgroundColor = '#9C2B2E';
     errorMessage.classList.add('error-message');
     errorMessage.innerHTML = "⚠️ Location not found.";
     appHeader.appendChild(errorMessage);
